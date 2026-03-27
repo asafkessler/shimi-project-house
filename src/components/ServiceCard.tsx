@@ -11,7 +11,7 @@ interface ServiceCardProps {
   href: string
   bookHref: string
   startingAt: string
-  accentColor?: string
+  accent?: 'sage' | 'copper'
   delay?: number
 }
 
@@ -23,76 +23,111 @@ export default function ServiceCard({
   href,
   bookHref,
   startingAt,
+  accent = 'sage',
   delay = 0,
 }: ServiceCardProps) {
+  const accentColor  = accent === 'sage' ? '#7aaa82' : '#c07a4a'
+  const accentLight  = accent === 'sage' ? '#a8cead' : '#d4956a'
+  const accentGlow   = accent === 'sage' ? 'rgba(122,170,130,0.12)' : 'rgba(192,122,74,0.12)'
+  const accentBorder = accent === 'sage' ? 'rgba(122,170,130,0.25)' : 'rgba(192,122,74,0.25)'
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="card-glow group relative bg-surface border border-border rounded-2xl overflow-hidden flex flex-col"
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative flex flex-col rounded-3xl overflow-hidden"
+      style={{
+        background: 'linear-gradient(160deg, #192519 0%, #111c14 100%)',
+        border: '1px solid rgba(45, 64, 40, 0.7)',
+        transition: 'box-shadow 0.5s ease, transform 0.5s ease, border-color 0.5s ease',
+      }}
+      whileHover={{
+        y: -8,
+        transition: { duration: 0.4, ease: 'easeOut' },
+      }}
     >
-      {/* Top accent line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+      {/* Top accent bar */}
+      <div
+        className="h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: `linear-gradient(90deg, transparent, ${accentColor}60, transparent)` }}
+      />
 
       <div className="p-8 flex flex-col flex-1">
+
         {/* Icon */}
-        <div className="w-14 h-14 rounded-xl bg-surface-2 border border-border-gold flex items-center justify-center mb-6 text-gold group-hover:border-gold/50 group-hover:bg-surface-3 transition-all duration-400">
+        <div
+          className="w-14 h-14 rounded-2xl flex items-center justify-center mb-7 transition-all duration-400"
+          style={{
+            background: `rgba(${accent === 'sage' ? '122,170,130' : '192,122,74'}, 0.08)`,
+            border: `1px solid rgba(${accent === 'sage' ? '122,170,130' : '192,122,74'}, 0.2)`,
+            color: accentColor,
+          }}
+        >
           {icon}
         </div>
 
         {/* Title */}
-        <h3 className="font-heading text-2xl font-semibold text-text mb-3 group-hover:text-gold-light transition-colors duration-300">
+        <h3
+          className="heading-serif text-2xl mb-4 transition-colors duration-300"
+          style={{ color: '#f0e8dc' }}
+        >
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-text-muted text-sm leading-relaxed mb-6">{description}</p>
+        <p className="text-text-muted/80 text-sm leading-relaxed mb-7 font-light">{description}</p>
 
         {/* Features */}
-        <ul className="space-y-2 mb-8 flex-1">
+        <ul className="space-y-2.5 mb-8 flex-1">
           {features.map((f, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-sm text-text-muted">
-              <svg
-                className="w-4 h-4 text-gold mt-0.5 shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
+            <li key={i} className="flex items-center gap-3 text-sm text-text-muted/70 font-light">
+              <span
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+                style={{ background: accentColor, opacity: 0.7 }}
+              />
               {f}
             </li>
           ))}
         </ul>
 
         {/* Footer */}
-        <div className="pt-6 border-t border-border flex items-center justify-between">
+        <div
+          className="pt-6 flex items-center justify-between"
+          style={{ borderTop: '1px solid rgba(45, 64, 40, 0.6)' }}
+        >
           <div>
-            <p className="text-text-dim text-xs uppercase tracking-wider mb-0.5">Starting at</p>
-            <p className="text-gold font-semibold text-xl font-heading">{startingAt}</p>
+            <p className="text-text-dim text-[10px] uppercase tracking-[0.2em] mb-1 font-medium">Starting at</p>
+            <p
+              className="heading-serif text-2xl font-semibold"
+              style={{ color: accentLight }}
+            >
+              {startingAt}
+            </p>
           </div>
           <div className="flex gap-2">
             <Link
               href={href}
-              className="btn-outline-gold px-4 py-2 rounded-lg text-sm font-medium"
+              className="btn-ghost px-4 py-2 rounded-xl text-xs font-medium tracking-wide"
             >
-              Learn More
+              Details
             </Link>
             <Link
               href={bookHref}
-              className="btn-gold px-4 py-2 rounded-lg text-sm font-semibold"
+              className={accent === 'sage' ? 'btn-sage px-4 py-2 rounded-xl text-xs font-semibold tracking-wide' : 'btn-copper px-4 py-2 rounded-xl text-xs font-semibold tracking-wide'}
             >
-              Book
+              <span>Book</span>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Bottom glow on hover */}
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold/0 to-transparent group-hover:via-gold/30 transition-all duration-500" />
+      {/* Hover glow */}
+      <div
+        className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ boxShadow: `inset 0 0 60px ${accentGlow}` }}
+      />
     </motion.div>
   )
 }

@@ -1,20 +1,28 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import Hero from '@/components/Hero'
 import ServiceCard from '@/components/ServiceCard'
 
-function FadeSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function Reveal({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
+}) {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-60px' })
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 36 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}
@@ -26,52 +34,54 @@ const services = [
   {
     title: 'Mixing Services',
     description:
-      'Transform your raw recordings into polished, release-ready tracks. From intimate acoustic recordings to full-scale productions — every element placed with intention.',
+      'Every element placed with intention. From intimate acoustic recordings to dense electronic productions — your sound, refined.',
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
       </svg>
     ),
     features: [
       'Professional stereo mixing',
       'Stem mastering',
-      'Revision rounds included',
+      'Unlimited revisions',
       'Streaming-optimized delivery',
     ],
     href: '/services/mixing',
     bookHref: '/book/mixing',
     startingAt: '$150',
+    accent: 'sage' as const,
   },
   {
     title: 'Production Retreat',
     description:
-      'Immerse yourself in a dedicated creative environment. Multi-day packages combining studio access, private accommodation, and one-on-one production mentorship.',
+      'Multi-day creative immersions. Private accommodation, full studio access, and one-on-one sessions that break blocks and build worlds.',
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
     ),
     features: [
-      'Private accommodation included',
+      'Private accommodation',
       'Full studio access',
       'Daily producer sessions',
-      'All meals & transport',
+      'Meals & transport included',
     ],
     href: '/services/retreat',
     bookHref: '/book/retreat',
     startingAt: '$800',
+    accent: 'copper' as const,
   },
   {
     title: 'Studio Rental',
     description:
-      'Book our world-class recording facility by the hour, day, or week. Full outboard gear, instrument library, and experienced engineers available on request.',
+      'Book the space as yours. World-class gear, curated instrument library, and the quiet you need to work with no compromises.',
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
       </svg>
     ),
     features: [
-      'Half-day to weekly options',
+      'Half-day to weekly rates',
       'Full outboard rack',
       'Accommodation available',
       'Engineer on request',
@@ -79,121 +89,141 @@ const services = [
     href: '/services/studio-rental',
     bookHref: '/book/studio-rental',
     startingAt: '$200',
+    accent: 'sage' as const,
   },
 ]
 
 const testimonials = [
   {
-    quote:
-      'Working at Shimi Project House was transformative. The acoustic environment, the gear, and Shimi\'s ear for sound elevated my album to a level I didn\'t think was possible.',
+    quote: 'Working at Shimi Project House was transformative. The acoustic environment, the gear, and the ear for sound elevated my album to a level I didn\'t think was possible.',
     name: 'Mara K.',
     role: 'Independent Artist',
   },
   {
-    quote:
-      'The retreat package was exactly what I needed to break through creative blocks. Five days, fully immersed, and I came out with half an album. The space does something to you.',
+    quote: 'The retreat was exactly what I needed to break through creative blocks. Five days, fully immersed, and I came out with half an album. The space does something to you.',
     name: 'Daniel R.',
     role: 'Electronic Music Producer',
   },
   {
-    quote:
-      'I\'ve recorded in studios across three continents. This one has something special — an intimacy in the sound that you can\'t manufacture with money. Just with vision.',
+    quote: 'I\'ve recorded in studios across three continents. This one has something special — an intimacy in the sound that you can\'t manufacture with money. Just with vision.',
     name: 'Yael S.',
     role: 'Session Guitarist & Vocalist',
   },
 ]
 
 const galleryItems = [
-  { label: 'Control Room', aspect: 'col-span-2 row-span-2' },
-  { label: 'Vocal Booth', aspect: '' },
-  { label: 'Live Room', aspect: '' },
-  { label: 'Lounge', aspect: '' },
-  { label: 'Outboard Rack', aspect: '' },
-  { label: 'Piano Corner', aspect: 'col-span-2' },
+  { label: 'Control Room',   span: 'col-span-2 row-span-2', hue: '142' },
+  { label: 'Vocal Booth',    span: '',                       hue: '28'  },
+  { label: 'Live Room',      span: '',                       hue: '142' },
+  { label: 'Lounge',         span: '',                       hue: '28'  },
+  { label: 'Outboard Rack',  span: '',                       hue: '142' },
+  { label: 'Piano Corner',   span: 'col-span-2',             hue: '28'  },
 ]
 
 export default function HomePage() {
   return (
-    <div className="bg-background">
+    <div style={{ background: '#0b1410' }}>
       <Hero />
 
-      {/* Services Section */}
-      <section id="services" className="py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-          <FadeSection className="text-center mb-16">
-            <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-4">What We Offer</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-text mb-5">
-              Services Built for Artists
-            </h2>
-            <div className="gold-divider mb-6" />
-            <p className="text-text-muted max-w-xl mx-auto leading-relaxed">
-              From a single mix to a full creative retreat — every service is designed to serve the work.
+      {/* ── Services ─────────────────────────────────────────── */}
+      <section id="services" className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="text-center mb-20">
+            <div className="line-accent mb-8" />
+            <p className="text-sage/60 text-[11px] tracking-[0.4em] uppercase font-light mb-5 font-body">
+              What We Offer
             </p>
-          </FadeSection>
+            <h2 className="heading-display text-5xl md:text-6xl text-text mb-6">
+              Services for Artists
+            </h2>
+            <p className="text-text-muted/70 max-w-lg mx-auto leading-relaxed font-light text-sm">
+              From a single mix to a full week of creation — every service is designed to serve the work.
+            </p>
+          </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5">
             {services.map((s, i) => (
-              <ServiceCard key={s.title} {...s} delay={i * 0.12} />
+              <ServiceCard key={s.title} {...s} delay={i * 0.1} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-28 px-6 bg-surface/40">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Visual */}
-            <FadeSection delay={0.1}>
+      {/* ── About ────────────────────────────────────────────── */}
+      <section id="about" className="py-32 px-6 relative overflow-hidden">
+        {/* Background blob */}
+        <div
+          className="blob absolute -left-32 top-1/3 w-[500px] h-[500px] opacity-10 pointer-events-none"
+          style={{ background: 'rgba(74, 122, 82, 0.6)' }}
+        />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+
+            {/* Left: visual */}
+            <Reveal delay={0.1}>
               <div className="relative">
-                {/* Main image placeholder */}
-                <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-surface-2 via-surface-3 to-background border border-border overflow-hidden">
+                <div
+                  className="aspect-[4/5] rounded-3xl overflow-hidden relative"
+                  style={{ background: 'linear-gradient(145deg, #192519, #0f1a11)', border: '1px solid rgba(45,64,40,0.6)' }}
+                >
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
-                      <div className="waveform scale-[2] mb-8 justify-center">
+                      <div className="waveform scale-[2.5] mb-10 justify-center">
                         <span /><span /><span /><span /><span /><span /><span />
                       </div>
-                      <p className="text-text-dim text-sm tracking-widest uppercase">Shimi</p>
+                      <p className="text-text-dim text-xs tracking-[0.3em] uppercase font-light">Shimi</p>
                     </div>
                   </div>
-                  {/* Decorative gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0"
+                    style={{ background: 'linear-gradient(to top, rgba(11,20,16,0.5) 0%, transparent 60%)' }}
+                  />
                 </div>
-                {/* Stats card */}
+
+                {/* Floating stats */}
                 <motion.div
-                  initial={{ opacity: 0, x: 20, y: 20 }}
+                  initial={{ opacity: 0, x: 24, y: 24 }}
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="absolute -bottom-6 -right-6 bg-surface border border-border-gold rounded-2xl p-6 shadow-gold"
+                  transition={{ delay: 0.5, duration: 0.9 }}
+                  className="absolute -bottom-8 -right-6 p-6 rounded-2xl"
+                  style={{
+                    background: 'linear-gradient(160deg, #192519, #111c14)',
+                    border: '1px solid rgba(45,64,40,0.8)',
+                    boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+                  }}
                 >
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-2 gap-5">
                     {[
-                      { value: '15+', label: 'Years Experience' },
-                      { value: '400+', label: 'Tracks Mixed' },
-                      { value: '80+', label: 'Artists Hosted' },
-                      { value: '3', label: 'Genre Awards' },
+                      { value: '15+',  label: 'Years' },
+                      { value: '400+', label: 'Tracks' },
+                      { value: '80+',  label: 'Artists' },
+                      { value: '3',    label: 'Awards' },
                     ].map((stat) => (
                       <div key={stat.label} className="text-center">
-                        <p className="font-heading text-2xl font-bold text-gold">{stat.value}</p>
-                        <p className="text-text-dim text-xs mt-0.5 leading-tight">{stat.label}</p>
+                        <p className="heading-serif text-2xl text-sage-light">{stat.value}</p>
+                        <p className="text-text-dim text-[10px] mt-0.5 tracking-wider uppercase font-light">{stat.label}</p>
                       </div>
                     ))}
                   </div>
                 </motion.div>
               </div>
-            </FadeSection>
+            </Reveal>
 
-            {/* Right: Text */}
-            <FadeSection delay={0.2} className="lg:pl-8">
-              <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-5">About the Studio</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-text mb-6 leading-tight">
+            {/* Right: text */}
+            <Reveal delay={0.2} className="lg:pl-6">
+              <p className="text-sage/60 text-[11px] tracking-[0.4em] uppercase font-light mb-6 font-body">
+                About the Studio
+              </p>
+              <h2 className="heading-display text-5xl md:text-6xl text-text mb-3 leading-tight">
                 Sound as a
-                <span className="text-gold-shimmer italic block mt-1">Craft & Philosophy</span>
               </h2>
-              <div className="space-y-4 text-text-muted leading-relaxed mb-8">
+              <h2 className="heading-display text-5xl md:text-6xl italic mb-8 leading-tight text-copper-shimmer">
+                Craft & Philosophy
+              </h2>
+              <div className="space-y-5 text-text-muted/75 leading-relaxed mb-10 font-light text-sm">
                 <p>
-                  Shimi Project House was built from a single conviction: that the right environment transforms what&apos;s possible in music. As a producer, guitarist, pianist, and sound engineer with over 15 years in the field, every decision in this space — acoustic, aesthetic, technical — serves that belief.
+                  Shimi Project House was built from a single conviction: that the right environment transforms what&apos;s possible in music. As a producer, guitarist, pianist, and sound engineer with over 15 years in the field, every decision here — acoustic, aesthetic, technical — serves that belief.
                 </p>
                 <p>
                   The studio combines analogue warmth with modern precision. From Neve preamps to custom-tuned room acoustics, from a Steinway grand to a curated collection of vintage guitars — every tool is chosen to serve the music, not the ego.
@@ -202,11 +232,16 @@ export default function HomePage() {
                   Whether you&apos;re here to record, mix, or immerse yourself in a week-long creative retreat, you leave with work that sounds like it was made in exactly the right place.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-3 mb-8">
+              <div className="flex flex-wrap gap-2 mb-10">
                 {['Music Producer', 'Sound Engineer', 'Guitarist', 'Pianist', 'Mix Engineer'].map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 rounded-full border border-border-gold text-xs text-gold-muted font-medium bg-surface-2"
+                    className="px-3.5 py-1.5 rounded-full text-xs font-light font-body"
+                    style={{
+                      border: '1px solid rgba(122,170,130,0.2)',
+                      color: 'rgba(168,206,173,0.7)',
+                      background: 'rgba(122,170,130,0.04)',
+                    }}
                   >
                     {tag}
                   </span>
@@ -214,74 +249,67 @@ export default function HomePage() {
               </div>
               <Link
                 href="/services/mixing"
-                className="btn-gold inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold"
+                className="btn-ghost inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-medium tracking-wide"
               >
                 Explore Services
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-            </FadeSection>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-          <FadeSection className="text-center mb-16">
-            <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-4">The Space</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-text mb-5">
-              Inside the Studio
-            </h2>
-            <div className="gold-divider mb-6" />
-            <p className="text-text-muted max-w-xl mx-auto">
-              Designed for focus. Built for sound. Every room crafted to serve the creative process.
+      {/* ── Gallery ──────────────────────────────────────────── */}
+      <section id="gallery" className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="text-center mb-20">
+            <div className="line-accent mb-8" />
+            <p className="text-sage/60 text-[11px] tracking-[0.4em] uppercase font-light mb-5 font-body">The Space</p>
+            <h2 className="heading-display text-5xl md:text-6xl text-text mb-6">Inside the Studio</h2>
+            <p className="text-text-muted/70 max-w-md mx-auto font-light text-sm leading-relaxed">
+              Designed for focus. Built for sound.
             </p>
-          </FadeSection>
+          </Reveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[200px]">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[180px]">
             {galleryItems.map((item, i) => (
               <motion.div
                 key={item.label}
-                initial={{ opacity: 0, scale: 0.97 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: i * 0.08, duration: 0.6 }}
-                className={`${item.aspect} relative rounded-xl overflow-hidden bg-gradient-to-br from-surface-2 to-surface-3 border border-border group cursor-pointer`}
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{ delay: i * 0.07, duration: 0.7 }}
+                className={`${item.span} relative rounded-2xl overflow-hidden cursor-pointer group`}
+                style={{ border: '1px solid rgba(45,64,40,0.5)' }}
               >
-                {/* Gradient patterns to simulate photos */}
                 <div
-                  className="absolute inset-0 opacity-30"
+                  className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
                   style={{
                     background: [
-                      'radial-gradient(ellipse at 20% 80%, #c9a84c22 0%, transparent 70%), radial-gradient(ellipse at 80% 20%, #8b691422 0%, transparent 70%)',
-                      'radial-gradient(ellipse at 50% 50%, #c9a84c15 0%, transparent 80%)',
-                      'radial-gradient(ellipse at 30% 70%, #8b691418 0%, transparent 60%), linear-gradient(135deg, #1a1a1a, #0f0c07)',
-                      'radial-gradient(ellipse at 70% 30%, #c9a84c12 0%, transparent 70%)',
-                      'linear-gradient(45deg, #111 0%, #1a1505 100%)',
-                      'radial-gradient(ellipse at 50% 80%, #c9a84c20 0%, transparent 60%), linear-gradient(180deg, #0a0a0a, #161208)',
-                    ][i % 6],
+                      `radial-gradient(ellipse at 30% 70%, hsla(${item.hue},40%,20%,0.8) 0%, hsla(${item.hue},30%,10%,0.9) 100%)`,
+                      `radial-gradient(ellipse at 70% 30%, hsla(${item.hue},35%,18%,0.8) 0%, #0b1410 100%)`,
+                      `linear-gradient(135deg, hsla(${item.hue},30%,15%,0.9) 0%, #0b1410 100%)`,
+                    ][i % 3],
                   }}
                 />
 
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-all duration-400" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-400" />
 
                 {/* Label */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-gold text-sm font-medium">{item.label}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  style={{ background: 'linear-gradient(to top, rgba(11,20,16,0.9), transparent)' }}
+                >
+                  <p className="text-sage-light text-sm font-light tracking-wider">{item.label}</p>
                 </div>
 
-                {/* Icon */}
+                {/* Center icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <svg
-                    className="w-8 h-8 text-text-dim opacity-30 group-hover:opacity-50 transition-opacity"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1}
-                  >
+                  <svg className="w-7 h-7 opacity-20 group-hover:opacity-40 transition-opacity duration-300"
+                    style={{ color: i % 2 === 0 ? '#7aaa82' : '#c07a4a' }}
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -291,47 +319,46 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="py-28 px-6 bg-surface/30">
-        <div className="max-w-7xl mx-auto">
-          <FadeSection className="text-center mb-16">
-            <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-4">Client Words</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-text mb-5">
-              What Artists Say
-            </h2>
-            <div className="gold-divider" />
-          </FadeSection>
+      {/* ── Testimonials ─────────────────────────────────────── */}
+      <section id="testimonials" className="py-32 px-6 relative overflow-hidden">
+        <div
+          className="blob absolute right-[-100px] top-1/4 w-[400px] h-[400px] opacity-8 pointer-events-none"
+          style={{ background: 'rgba(192,122,74,0.4)' }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <Reveal className="text-center mb-20">
+            <div className="line-accent mb-8" />
+            <p className="text-sage/60 text-[11px] tracking-[0.4em] uppercase font-light mb-5 font-body">Client Words</p>
+            <h2 className="heading-display text-5xl md:text-6xl text-text">What Artists Say</h2>
+          </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5">
             {testimonials.map((t, i) => (
               <motion.div
                 key={t.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 36 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: i * 0.15, duration: 0.7 }}
-                className="card-glow bg-surface border border-border rounded-2xl p-8 flex flex-col"
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{ delay: i * 0.12, duration: 0.9 }}
+                className="card-organic p-8 flex flex-col"
               >
-                {/* Stars */}
-                <div className="flex gap-1 mb-6">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <svg key={j} className="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-
-                <div className="quote-mark mb-3">&ldquo;</div>
-
-                <p className="text-text-muted leading-relaxed text-sm flex-1 -mt-6">{t.quote}</p>
-
-                <div className="mt-6 pt-6 border-t border-border flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center">
-                    <span className="text-gold font-heading font-bold text-sm">{t.name[0]}</span>
+                <div className="quote-mark mb-2">&ldquo;</div>
+                <p className="text-text-muted/75 leading-relaxed text-sm flex-1 -mt-5 font-light">
+                  {t.quote}
+                </p>
+                <div
+                  className="mt-8 pt-6 flex items-center gap-4"
+                  style={{ borderTop: '1px solid rgba(45,64,40,0.5)' }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: 'rgba(122,170,130,0.08)', border: '1px solid rgba(122,170,130,0.2)' }}
+                  >
+                    <span className="heading-serif text-sage font-semibold">{t.name[0]}</span>
                   </div>
                   <div>
-                    <p className="text-text font-medium text-sm">{t.name}</p>
-                    <p className="text-text-dim text-xs">{t.role}</p>
+                    <p className="text-text/90 font-medium text-sm">{t.name}</p>
+                    <p className="text-text-dim text-xs font-light mt-0.5">{t.role}</p>
                   </div>
                 </div>
               </motion.div>
@@ -340,100 +367,68 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16">
-            {/* Left: Info */}
-            <FadeSection delay={0.1}>
-              <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium mb-5">Get in Touch</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-text mb-6 leading-tight">
-                Let&apos;s Make
-                <span className="text-gold-shimmer italic block mt-1">Something Real</span>
-              </h2>
-              <p className="text-text-muted leading-relaxed mb-10 max-w-md">
-                Whether you have a project in mind, want to enquire about availability, or just want to discuss your vision — reach out. Every collaboration starts with a conversation.
+      {/* ── Contact ───────────────────────────────────────────── */}
+      <section id="contact" className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20">
+            <Reveal delay={0.1}>
+              <div className="line-accent mb-8 mx-0 w-12"
+                style={{ margin: '0 0 32px 0' }}
+              />
+              <p className="text-sage/60 text-[11px] tracking-[0.4em] uppercase font-light mb-6 font-body">Get in Touch</p>
+              <h2 className="heading-display text-5xl md:text-6xl text-text mb-3">Let&apos;s Make</h2>
+              <h2 className="heading-display text-5xl md:text-6xl italic text-copper-shimmer mb-10">Something Real</h2>
+              <p className="text-text-muted/70 leading-relaxed mb-12 max-w-md font-light text-sm">
+                Whether you have a project in mind, want to ask about availability, or just want to talk about your vision — reach out. Every collaboration starts with a conversation.
               </p>
-
-              <div className="space-y-5">
+              <div className="space-y-6">
                 {[
-                  {
-                    icon: (
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    ),
-                    label: 'Email',
-                    value: 'hello@shimiprojecthouse.com',
-                  },
-                  {
-                    icon: (
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    ),
-                    label: 'Phone',
-                    value: '+1 (555) 000-0000',
-                  },
-                  {
-                    icon: (
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    ),
-                    label: 'Location',
-                    value: 'Available on booking confirmation',
-                  },
+                  { label: 'Email', value: 'hello@shimiprojecthouse.com' },
+                  { label: 'Phone', value: '+1 (555) 000-0000' },
+                  { label: 'Location', value: 'Shared on booking confirmation' },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-surface-2 border border-border-gold flex items-center justify-center text-gold shrink-0">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <p className="text-text-dim text-xs uppercase tracking-wider mb-0.5">{item.label}</p>
-                      <p className="text-text-muted text-sm">{item.value}</p>
+                    <div className="mt-0.5">
+                      <p className="text-text-dim text-[10px] uppercase tracking-[0.25em] mb-0.5 font-medium">{item.label}</p>
+                      <p className="text-text-muted/70 text-sm font-light">{item.value}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            </FadeSection>
+            </Reveal>
 
-            {/* Right: Form */}
-            <FadeSection delay={0.2}>
+            <Reveal delay={0.2}>
               <ContactForm />
-            </FadeSection>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-[#1a1408] to-background" />
-        <div className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: 'radial-gradient(ellipse at 50% 50%, #c9a84c33 0%, transparent 70%)',
-          }}
+      {/* ── CTA Banner ───────────────────────────────────────── */}
+      <section className="py-28 px-6 relative overflow-hidden">
+        <div
+          className="blob absolute inset-x-1/4 top-1/2 -translate-y-1/2 w-[600px] h-[300px] opacity-15 pointer-events-none"
+          style={{ background: 'rgba(74, 122, 82, 0.5)' }}
         />
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <FadeSection>
-            <div className="gold-divider mb-8" />
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-text mb-6">
-              Ready to Start Creating?
+          <Reveal>
+            <div className="line-accent mb-12" />
+            <h2 className="heading-display text-5xl md:text-6xl text-text mb-6 leading-tight">
+              Ready to Start<br />Creating?
             </h2>
-            <p className="text-text-muted mb-10 leading-relaxed max-w-xl mx-auto">
-              Your next record deserves the right environment. Book a session, a retreat, or a studio day — and let the work begin.
+            <p className="text-text-muted/70 mb-12 leading-relaxed max-w-md mx-auto font-light text-sm">
+              Your next record deserves the right environment. Book a session, a retreat, or a studio day.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/book/mixing" className="btn-gold px-8 py-4 rounded-xl font-semibold text-base shadow-gold-lg">
-                Book a Session
+              <Link href="/book/mixing" className="btn-sage px-9 py-4 rounded-2xl text-sm font-semibold tracking-wide">
+                <span>Book a Session</span>
               </Link>
-              <Link href="/services/retreat" className="btn-outline-gold px-8 py-4 rounded-xl font-medium text-base">
+              <Link href="/services/retreat" className="btn-ghost px-9 py-4 rounded-2xl text-sm font-medium tracking-wide">
                 View Retreats
               </Link>
             </div>
-            <div className="gold-divider mt-8" />
-          </FadeSection>
+            <div className="line-accent mt-12" />
+          </Reveal>
         </div>
       </section>
     </div>
@@ -443,28 +438,31 @@ export default function HomePage() {
 function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // In production, this would send to an email service
-    alert('Thank you for your message. We\'ll be in touch within 24 hours.')
+    alert('Thank you. We\'ll be in touch within 24 hours.')
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface border border-border rounded-2xl p-8 space-y-5"
+      className="rounded-3xl p-8 space-y-5"
+      style={{
+        background: 'linear-gradient(160deg, #192519, #111c14)',
+        border: '1px solid rgba(45,64,40,0.7)',
+      }}
     >
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm text-text-muted mb-2">Name</label>
-          <input type="text" placeholder="Your name" className="input-dark" required />
+          <label className="block text-xs text-text-muted/60 mb-2.5 tracking-wide font-light">Name</label>
+          <input type="text" placeholder="Your name" className="input-forest" required />
         </div>
         <div>
-          <label className="block text-sm text-text-muted mb-2">Email</label>
-          <input type="email" placeholder="your@email.com" className="input-dark" required />
+          <label className="block text-xs text-text-muted/60 mb-2.5 tracking-wide font-light">Email</label>
+          <input type="email" placeholder="your@email.com" className="input-forest" required />
         </div>
       </div>
       <div>
-        <label className="block text-sm text-text-muted mb-2">Subject</label>
-        <select className="input-dark">
+        <label className="block text-xs text-text-muted/60 mb-2.5 tracking-wide font-light">Interested in</label>
+        <select className="input-forest">
           <option value="">Select a service</option>
           <option value="mixing">Mixing Services</option>
           <option value="retreat">Production Retreat</option>
@@ -473,16 +471,16 @@ function ContactForm() {
         </select>
       </div>
       <div>
-        <label className="block text-sm text-text-muted mb-2">Message</label>
+        <label className="block text-xs text-text-muted/60 mb-2.5 tracking-wide font-light">Message</label>
         <textarea
           placeholder="Tell us about your project..."
           rows={5}
-          className="input-dark resize-none"
+          className="input-forest resize-none"
           required
         />
       </div>
-      <button type="submit" className="btn-gold w-full py-3.5 rounded-xl font-semibold text-sm">
-        Send Message
+      <button type="submit" className="btn-sage w-full py-4 rounded-2xl font-semibold text-sm tracking-wide">
+        <span>Send Message</span>
       </button>
     </form>
   )
